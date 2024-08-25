@@ -1,2 +1,2 @@
 # Simple-Calculator-V2
-A horror game within a calculator.
+A game within a calculator that can't calculate.
