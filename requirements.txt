@@ -1,5 +1,2 @@
 pygame
 fade
-os
-time
-random
