@@ -11,6 +11,36 @@ def clear_cmd():
     os.system('cls' if os.name == 'nt' else 'clear')
 clear_cmd()
 time.sleep(0.5)
+def flash_randomly(duration=30):
+    start_time = time.time()
+    flashes = 0
+    
+    while time.time() - start_time < duration:
+        elapsed_time = time.time() - start_time
+        
+        # Chance to flash, ensuring no more than 3 flashes in 10 seconds
+        if random.random() < 0.03 and flashes < 3 and elapsed_time < 10:
+            # ANSI escape codes to change the background and text color
+            white_screen = "\033[47;30m"
+            reset_screen = "\033[0m"
+            
+            # Clear screen and set to white
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print(white_screen + " " * os.get_terminal_size().columns)
+            time.sleep(1)
+            
+            # Reset screen to normal
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print(reset_screen, end='')
+            
+            flashes += 1
+        
+        # Reset flashes counter after 10 seconds
+        if elapsed_time >= 10:
+            start_time = time.time()
+            flashes = 0
+        
+        time.sleep(0.1)
 
 text = """ 
  █████╗ ██╗   ██╗███████╗██████╗  █████╗  ██████╗ ███████╗     █████╗ ██╗  ██╗███████╗    ██╗   ██╗███████╗███████╗██████╗ 
@@ -144,4 +174,54 @@ correct_status = input(fade.water("Is the calculation correct? (y/n)"))
 print(fade.water("""
 Perfect!"""))
 
+time.sleep(2)
+
+clear_cmd()
+
+time.sleep(0.5)
+
+text = """
+██╗  ██╗ ██████╗ ██╗  ██╗
+██║  ██║██╔═████╗██║  ██║
+███████║██║██╔██║███████║
+╚════██║████╔╝██║╚════██║
+     ██║╚██████╔╝     ██║
+     ╚═╝ ╚═════╝      ╚═╝
+
+     
+     
+     """
+print(fade.blackwhite(text))
 time.sleep(4)
+
+print(fade.fire("Oh crap.."))
+
+pygame.mixer.music.load("lib/music2.mp3")
+
+pygame.mixer.music.play(-1)
+
+time.sleep(3)
+i = 0
+while True:
+
+    translated_string = input(fade.fire("""
+
+    Looks like a bug, please translate the following from russian into english to exit (follow grammatical rules).
+
+    "Белый снег, белый мел, белый заяц тоже бел. А вот белка не бела, белой даже не была." """))
+
+    i += 1
+    if translated_string == "White snow, white chalk, white hare is also white. But the squirrel isn’t white, it has never been white.":
+        break
+    elif i > 3:
+        print(fade.brazil("Alright, I will just do it for you at this point! Give me a minute.."))
+        time.sleep(20)
+        print(fade.brazil("""The answer was; "White snow, white chalk, white hare is also white. But the squirrel isn’t white, it has never been white." (Russian Tongue Twister) """))
+        time.sleep(8)
+        break
+    else:
+        print(fade.water("Please retry!"))
+        pass
+
+print(fade.greenblue("Thank you for not pressing X to exit. Quitting now..."))
+time.sleep(2)
